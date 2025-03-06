@@ -4,14 +4,12 @@ $file = 'data.txt';
 // Kiểm tra nếu có dữ liệu từ ESP8266 gửi đến
 if (isset($_GET['data'])) {
     $data = $_GET['data'];  // Lấy dữ liệu từ tham số "data"
-    $timestamp = date("Y-m-d H:i:s");
 
-    // Lưu nguyên chuỗi vào file
-    $log = "$timestamp - Data: $data\n";
-    file_put_contents($file, $log, FILE_APPEND);
+    // Ghi đè dữ liệu vào file (không thêm ngày tháng, giờ)
+    file_put_contents($file, $data);
 
     // Phản hồi lại ESP8266
-    echo "Dữ liệu đã được lưu!";
+    echo "Dữ liệu đã được ghi đè!";
 } else {
     echo "Không nhận được dữ liệu!";
 }
