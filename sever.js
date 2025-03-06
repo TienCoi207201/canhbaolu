@@ -1,45 +1,46 @@
-const express = require('express');
-const fs = require('fs');
-const cors = require('cors');
-const path = require('path');
-
+const express = require("express");
+const fs = require("fs");
 const app = express();
 
-app.use(cors());
-app.use(express.json()); 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); // Xử lý dữ liệu từ form
+app.use(express.json()); // Xử lý dữ liệu JSON
 
-const filePath = path.join('/tmp', 'data.txt'); // Ghi file vào /tmp
+// Route GET để nhận dữ liệu từ ESP8266
+app.get("/data", (req, res) => {
+    let sensorValue = req.query.sensor_value;
+    let timestamp = new Date().toISOString();
+    let logData = `${timestamp} - Sensor Value: ${sensorValue}\n`;
 
-app.post('/', (req, res) => {
-    const receivedData = req.body.data;
-    console.log('Dữ liệu nhận được:', receivedData);
-
-    if (!receivedData) {
-        return res.status(400).send('Không có dữ liệu');
-    }
-
-    fs.writeFile(filePath, receivedData, (err) => {
+    fs.appendFile("data.txt", logData, (err) => {
         if (err) {
-            console.error('Lỗi ghi file:', err);
-            return res.status(500).send('Lỗi ghi file');
+            console.error("Lỗi ghi file:", err);
+            res.status(500).send("Lỗi server");
+        } else {
+            console.log("Dữ liệu đã được lưu:", logData);
+            res.send("Dữ liệu đã được lưu thành công!");
         }
-        console.log('Dữ liệu đã ghi vào:', filePath);
-        res.send('Dữ liệu đã được lưu');
     });
 });
 
-app.get('/data', (req, res) => {
-    fs.readFile(filePath, 'utf8', (err, data) => {
+// Route POST để nhận dữ liệu từ ESP8266
+app.post("/data", (req, res) => {
+    let sensorValue = req.body.sensor_value;
+    let timestamp = new Date().toISOString();
+    let logData = `${timestamp} - Sensor Value: ${sensorValue}\n`;
+
+    fs.appendFile("data.txt", logData, (err) => {
         if (err) {
-            console.error('Lỗi đọc file:', err);
-            return res.status(500).send('Lỗi đọc file');
+            console.error("Lỗi ghi file:", err);
+            res.status(500).send("Lỗi server");
+        } else {
+            console.log("Dữ liệu đã được lưu:", logData);
+            res.send("Dữ liệu đã được lưu thành công!");
         }
-        res.send(data);
     });
 });
 
+// Khởi động server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server đang chạy tại http://localhost:${PORT}`);
+    console.log(`Server đang chạy trên cổng ${PORT}`);
 });
