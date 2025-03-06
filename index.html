@@ -1,26 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- 
-      This is an HTML comment
-      You can write text in a comment and the content won't be visible in the page
-    -->
-
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Cảnh Báo Lũ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+        }
+        .header {
+            background-color: cyan;
+            color: yellow;
+            font-weight: bold;
+            font-size: 24px;
+            padding: 15px;
+        }
+        .station {
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .station-title {
+            background-color: gold;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px;
+        }
+        .station-content {
+            background-color: pink;
+            padding: 15px;
+        }
+        .station-content p {
+            margin: 8px 0;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">HỆ THỐNG CẢNH BÁO LŨ</div>
     
-   
-    <title>canh bao lu</title>
-
-    <!-- The website stylesheet -->
-    <link rel="stylesheet" href="/style.css" />
-
-    <!-- The website JavaScript file -->
-    <script src="/script.js" defer></script>
-  </head>
-  <body>
-     <p>
-       Canh bao lu
-    </p>
-  </body>
+    <div class="station">
+        <div class="station-title">Trạm số 1</div>
+        <div class="station-content">
+            <p><strong>Độ ẩm đất:</strong> 40%</p>
+            <p><strong>Mực nước:</strong> 4.5 m</p>
+            <p><strong>Tốc độ dòng chảy:</strong> 20.8 m3</p>
+        </div>
+    </div>
+    
+    <div class="station">
+        <div class="station-title">Trạm số 2</div>
+        <div class="station-content">
+            <p><strong>Độ ẩm đất:</strong> 55%</p>
+            <p><strong>Mực nước:</strong> 3.0 m</p>
+            <p><strong>Tốc độ dòng chảy:</strong> 16.7 m3</p>
+        </div>
+    </div>
+</body>
 </html>
