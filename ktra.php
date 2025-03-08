@@ -4,7 +4,13 @@ while (true) {
     $dataFile = file_get_contents('data.txt');
     $databaseFile = file_get_contents('database.txt');
 
-    // Chuyển nội dung thành mảng bằng cách tách theo dấu phẩy
+    // Kiểm tra nếu file rỗng
+    if (empty($dataFile) || empty($databaseFile)) {
+        file_put_contents('status.txt', '0');
+        die('Lỗi: Một trong hai file rỗng.');
+    }
+
+    // Chuyển nội dung thành mảng bằng cách tách theo dấu phẩy và ép kiểu số thực
     $dataArray = array_map('floatval', explode(',', trim($dataFile)));
     $databaseArray = array_map('floatval', explode(',', trim($databaseFile)));
 
@@ -17,7 +23,7 @@ while (true) {
     // Biến kiểm tra điều kiện ghi file
     $status = 0;
 
-    // Kiểm tra điều kiện
+    // Kiểm tra điều kiện so sánh
     if (($dataArray[1] < $databaseArray[1]) || ($dataArray[4] < $databaseArray[4]) ||
         ($dataArray[0] > $databaseArray[0]) || ($dataArray[2] > $databaseArray[2]) ||
         ($dataArray[3] > $databaseArray[3]) || ($dataArray[5] > $databaseArray[5])) {
@@ -25,7 +31,7 @@ while (true) {
     }
 
     // Ghi đè dữ liệu vào file status.txt
-    file_put_contents('status.txt', $status);
+    file_put_contents('status.txt', (string) $status);
 
     // Debug: Kiểm tra giá trị đọc được
     echo "Data: " . implode(',', $dataArray) . "\n";
