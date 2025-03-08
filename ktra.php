@@ -21,24 +21,18 @@ while (true) {
     }
 
     // Biến kiểm tra điều kiện ghi file
-    $status = 0;
 
-    // Kiểm tra điều kiện so sánh
+    // Kiểm tra điều kiện (sau khi đã ép kiểu số thực)
     if (($dataArray[1] < $databaseArray[1]) || ($dataArray[4] < $databaseArray[4]) ||
         ($dataArray[0] > $databaseArray[0]) || ($dataArray[2] > $databaseArray[2]) ||
         ($dataArray[3] > $databaseArray[3]) || ($dataArray[5] > $databaseArray[5])) {
         $status = 1;
+    }else{
+       $status=0;
     }
-
-    // Ghi đè dữ liệu vào file status.txt
-    file_put_contents('status.txt', (string) $status);
-
-    // Debug: Kiểm tra giá trị đọc được
-    echo "Data: " . implode(',', $dataArray) . "\n";
-    echo "Database: " . implode(',', $databaseArray) . "\n";
-    echo "Status ghi vào file: $status\n";
-
-    // Chờ 5 giây trước khi kiểm tra lại
+// Ghi đè dữ liệu vào file status.txt
+    file_put_contents('status.txt',$status);
     sleep(5);
 }
-?>
+
+   
