@@ -5,8 +5,8 @@ while (true) {
     $databaseFile = file_get_contents('database.txt');
 
     // Chuyển nội dung thành mảng bằng cách tách theo dấu phẩy
-    $dataArray = explode(',', trim($dataFile));
-    $databaseArray = explode(',', trim($databaseFile));
+    $dataArray = array_map('floatval', explode(',', trim($dataFile)));
+    $databaseArray = array_map('floatval', explode(',', trim($databaseFile)));
 
     // Kiểm tra số lượng phần tử trong mỗi file
     if (count($dataArray) !== 6 || count($databaseArray) !== 6) {
@@ -26,6 +26,11 @@ while (true) {
 
     // Ghi đè dữ liệu vào file status.txt
     file_put_contents('status.txt', $status);
+
+    // Debug: Kiểm tra giá trị đọc được
+    echo "Data: " . implode(',', $dataArray) . "\n";
+    echo "Database: " . implode(',', $databaseArray) . "\n";
+    echo "Status ghi vào file: $status\n";
 
     // Chờ 5 giây trước khi kiểm tra lại
     sleep(5);
