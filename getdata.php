@@ -3,7 +3,7 @@ $file = 'data.txt';
 
 // Kiểm tra nếu có dữ liệu từ ESP8266 gửi đến
 if (isset($_GET['data'])) {
-    $data = $_GET['data']; // Lấy dữ liệu từ tham số "database"
+    $data = $_GET['data']; // Lấy dữ liệu từ tham số "data"
     
     // Tách dữ liệu thành mảng
     $dataArray = explode(',', $data);
@@ -21,7 +21,10 @@ if (isset($_GET['data'])) {
     // Ghi đè dữ liệu vào file
     file_put_contents($file, $formattedData);
 
-   
+    // Chạy checkStatus.php sau 3 giây (không chặn tiến trình chính)
+    exec("php checkStatus.php > /dev/null 2>&1 &");
+
+    echo "Dữ liệu đã được nhận và xử lý!";
 } else {
     echo "Không nhận được dữ liệu!";
 }
