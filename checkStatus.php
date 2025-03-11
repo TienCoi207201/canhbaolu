@@ -1,13 +1,12 @@
 <?php
-set_time_limit(0);
-
 while (true) {
     // Đọc dữ liệu từ file data.txt và database.txt
-    $data = file_get_contents("data.txt");
-    $database = file_get_contents("database.txt");
+    $data = @file_get_contents("data.txt");
+    $database = @file_get_contents("database.txt");
 
     // Kiểm tra nếu đọc file thất bại
     if ($data === false || $database === false) {
+        error_log("Lỗi: Không thể đọc file data.txt hoặc database.txt");
         file_put_contents("status.txt", "Error: Cannot read files");
         exit;
     }
@@ -18,6 +17,7 @@ while (true) {
 
     // Kiểm tra dữ liệu có đủ 6 giá trị không
     if (count($data_values) < 6 || count($database_values) < 6) {
+        error_log("Lỗi: Dữ liệu không đủ giá trị");
         file_put_contents("status.txt", "Error: Invalid data format");
         exit;
     }
@@ -35,8 +35,14 @@ while (true) {
     }
 
     // Ghi kết quả vào file status.txt
-    file_put_contents("status.txt", "$status1,$status2");
-    
-    // Chờ 5 giây trước khi chạy lại
-    sleep(5);
+    if (is_writable("status.txt")) {
+        file_put_contents("status.txt", "$status1,$status2");
+        error_log("Cập nhật status.txt thành công: $status1,$status2");
+    } else {
+        error_log("Lỗi: Không thể ghi vào status.txt");
+    }
+
+    // Đợi 3 giây trước khi kiểm tra lại
+    sleep(3);
 }
+?>
