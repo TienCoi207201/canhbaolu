@@ -56,10 +56,10 @@
                 console.error("Lỗi khi tải dữ liệu:", error);
             }
         }
-        setInterval(fetchData, 1000);
+        setInterval(fetchData, 2000);
     </script>
 </head>
-<body>
+<body onload="fetchData()">
     <div class="header">HỆ THỐNG CẢNH BÁO LŨ</div>
     
     <div class="station">
